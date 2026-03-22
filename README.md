@@ -1,69 +1,64 @@
-# InstaPay DevSecOps Project
-
-This is a complete, demo-ready DevSecOps project for a university security module. It features a secure payment system (InstaPay) with a focus on simple deployment, security scanning, and monitoring.
-
-## Features
-- **Backend:** Flask (Python) with JWT Authentication
-- **Database:** MongoDB for transaction storage
-- **Monitoring:** Prometheus for real-time metrics
-- **Security:** 
-  - Non-root Docker user
-  - SAST (Bandit)
-  - SCA (pip-audit)
-  - CI/CD with GitHub Actions
-- **Infrastructure:** Docker Compose, K8s (demo), Terraform (demo)
-
-## Prerequisites
-- Docker and Docker Compose
-
-## Quick Start (Run Locally)
-
-To start the entire system, run:
-
-```bash
+InstaPay DevSecOps Project
+InstaPay is a secure, demo-ready payment system built for university-level DevSecOps and security modules. This project demonstrates best practices in secure development, CI/CD automation, security scanning, and containerized deployment.
+DevSecOps Workflow Diagram
+[Code Commit] --> [GitHub Actions CI/CD] --> [SAST: Bandit]
+                                   --> [SCA: pip-audit]
+                                   --> [Tests: pytest]
+                                   --> [Docker Build]
+                                   --> [Deployment / Monitoring]
+Features
+Backend: Flask (Python) with JWT-based authentication
+Database: MongoDB for secure transaction storage
+Monitoring: Prometheus for real-time metrics and observability
+Security:
+Non-root Docker user for container safety
+Static Application Security Testing (SAST) via Bandit
+Software Composition Analysis (SCA) via pip-audit
+Continuous Integration / Continuous Deployment (CI/CD) with GitHub Actions
+Infrastructure & Deployment:
+Docker Compose for local deployment
+Kubernetes manifests (demo-ready)
+Terraform scripts (demo-ready)
+Prerequisites
+Docker and Docker Compose installed locally
+Optional: Kubernetes and Terraform for infrastructure demos
+Quick Start (Run Locally)
+Start the full system with:
 docker compose up --build
-```
-
-## URLs to Demo
-
-Once the system is running,  can access:
-
-- **Health Check:** [http://localhost:5000/health](http://localhost:5000/health)
-- **Metrics (Prometheus format):** [http://localhost:5000/metrics](http://localhost:5000/metrics)
-- **Prometheus Dashboard:** [http://localhost:9090](http://localhost:9090)
-
-## API Endpoints
-
-### 1. Login (Get JWT)
-**POST** `/login`
-```json
+Once up, the following services are available:
+Health Check: http://localhost:5000/health
+Metrics (Prometheus format): http://localhost:5000/metrics
+Prometheus Dashboard: http://localhost:9090
+API Endpoints
+1. Login (Get JWT)
+POST /login
 {
-    "username": "admin",
-    "password": "password"
+  "username": "admin",
+  "password": "password"
 }
-```
-
-### 2. Make a Payment (Protected)
-**POST** `/pay`
-**Headers:** `Authorization: Bearer <token>`
-```json
+Response: JWT token for authentication.
+2. Make a Payment (Protected)
+POST /pay
+Headers: Authorization: Bearer <token>
 {
-    "amount": 100,
-    "recipient": "bob"
+  "amount": 100,
+  "recipient": "bob"
 }
-```
-
-## Security Pipeline (CI/CD)
-
-The project includes a GitHub Actions workflow in `.github/workflows/devsecops.yml` that performs:
-1. **SCA:** Scans dependencies for known vulnerabilities using `pip-audit`.
-2. **SAST:** Scans source code for security flaws using `Bandit`.
-3. **Tests:** Runs basic functional tests using `pytest`.
-4. **Build:** Verifies the Docker image builds correctly.
-
-## Project Structure
-- `backend/`: Flask application, Dockerfile, and requirements.
-- `monitoring/`: Prometheus configuration.
-- `k8s/`: Sample Kubernetes deployment manifests.
-- `terraform/`: Sample infrastructure code.
-- `.github/`: CI/CD pipeline definitions.
+Response: Transaction confirmation.
+Security Pipeline (CI/CD)
+The project includes a GitHub Actions workflow in .github/workflows/ci.yml:
+SCA (Dependency Scan): Detects known vulnerabilities using pip-audit.
+SAST (Static Analysis): Scans Python code for security flaws with Bandit.
+Tests: Runs functional tests using pytest.
+Docker Build: Verifies containerization works properly.
+All pushes to main automatically trigger this pipeline, ensuring security and reliability.
+Project Structure
+backend/      # Flask application, Dockerfile, requirements
+monitoring/   # Prometheus configuration
+k8s/          # Kubernetes deployment manifests (demo)
+terraform/    # Sample infrastructure scripts (demo)
+.github/      # CI/CD pipeline workflows
+Highlights
+Fully automated DevSecOps workflow with SAST, SCA, testing, and build verification
+Secure containerized application with non-root execution
+Easily extensible for real-world CI/CD and security practices
