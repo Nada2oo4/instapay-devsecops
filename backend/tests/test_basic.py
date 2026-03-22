@@ -12,4 +12,4 @@ def test_health(client):
     # but we can mock it or just check for 200 if it's simple enough.
     # For demo purposes, we just check status code.
     rv = client.get('/health')
-    assert rv.status_code == 200
+    assert rv.status_code == 200 # nosec B101
