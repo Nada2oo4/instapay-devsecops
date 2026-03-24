@@ -26,3 +26,4 @@ docker-compose.override.yml
 
 # Monitoring
 monitoring/prometheus_data/
+.DS_Store
