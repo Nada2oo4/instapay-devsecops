@@ -62,4 +62,4 @@ jobs:
         with:
           target: 'http://localhost:5000/health'
           rules_file_name: '.zap/rules.tsv'
-          fail_action: false # Keep it for demo even if it finds issues
+          fail_action: false 
