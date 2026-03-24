@@ -1,0 +1,35 @@
+name: Dependency Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 1' # Weekly scan on Mondays
+
+jobs:
+  pip_audit:
+    name: Backend Dependency Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pip-audit
+        run: pip install pip-audit
+
+      - name: Run pip-audit
+        run: |
+          if [ -f backend/requirements.txt ]; then
+            pip-audit -r backend/requirements.txt
+          else
+            echo "backend/requirements.txt not found. Skipping scan."
+          fi
